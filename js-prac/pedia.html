@@ -88,10 +88,42 @@
         console.log('저장');
       }
       
+      // 현재기온 가져오기
       $(document).ready(function() {
         fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then(res => res.json()).then(data => {
             //$('#temp').text(data['temp']);
             document.querySelector('#temp').textContent = data['temp'];
+        })
+      })
+
+      // 영화정보 가져오기
+      fetch("http://spartacodingclub.shop/web/api/movie").then(res => res.json()).then(data => {
+        let rows = data['movies'];
+        //$('#cards').empty();
+        document.querySelector('#cards').replaceChildren();
+        rows.forEach((movie) => {
+          let title = movie['title'];
+          let desc = movie['desc'];
+          let comment = movie['comment'];
+          let star = movie['star'];
+          let image = movie['image'];
+          let star_image = '⭐'.repeat(star);
+          
+          let temp_html = `<div class="col">
+            <div class="card">
+              <img src=${image} class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${desc}</p>
+                <p>${star_image}</p>
+                <p class="mycomment">${comment}</p>
+              </div>
+            </div>
+          </div>`
+
+          //$('#cards').append(temp_html);
+          document.querySelector('#cards').insertAdjacentHTML('beforeend',temp_html);
+          //console.log(title,desc,comment,star,image);
         })
     })
     </script>
@@ -130,7 +162,7 @@
       </div>
   </div>
     <div class="mycards">
-      <div class="row row-cols-1 row-cols-md-4 g-4">
+      <div id="cards" class="row row-cols-1 row-cols-md-4 g-4">
         <div class="col">
           <div class="card">
             <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg" class="card-img-top" alt="...">
