@@ -87,6 +87,13 @@
       function save() {
         console.log('저장');
       }
+      
+      $(document).ready(function() {
+        fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then(res => res.json()).then(data => {
+            //$('#temp').text(data['temp']);
+            document.querySelector('#temp').textContent = data['temp'];
+        })
+    })
     </script>
 
     
@@ -94,6 +101,7 @@
   <body>
     <div class="mytitle">
       <h1>내 생애 최고의 영화들</h1>
+      <div>현재 서울의 날씨 : <span id="temp">20</span>도</div>
       <button onclick="save()">영화 기록하기</button>
     </div> 
     <div class="mypost">
